@@ -1,0 +1,29 @@
+server:
+  port: 9000
+spring:
+  cloud:
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8080
+      eager: true
+      datasource:
+        ds2:
+          nacos:
+            data-id: order-sentinel
+            data-type: json
+            group-id: DEFAULT_GROUP
+            rule-type: flow
+            server-addr: localhost:8848
+    nacos:
+      discovery:
+        ###服务注册地址
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+
+  application:
+    name: server-order
+feign:
+  sentinel:
+    enabled: true
