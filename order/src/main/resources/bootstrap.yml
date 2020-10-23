@@ -2,6 +2,12 @@ server:
   port: 9000
 spring:
   cloud:
+    service-registry:
+      auto-registration:
+        failFast: false
+        enabled: true
+        register-management: true
+
     sentinel:
       transport:
         port: 8719
@@ -19,6 +25,7 @@ spring:
       discovery:
         ###服务注册地址
         server-addr: 127.0.0.1:8848
+        enabled: true
       config:
         server-addr: 127.0.0.1:8848
 
@@ -27,3 +34,75 @@ spring:
 feign:
   sentinel:
     enabled: true
+
+# spring-cloud-starter-alibaba-nacos-discovery 在实现的时候提供了一个EndPoint,
+# EndPoint的访问地址为 http://ip:port/actuator/nacos-discovery。 EndPoint 的信息主要提供了两类:
+#1、subscribe: 显示了当前有哪些服务订阅者
+#2、NacosDiscoveryProperties: 显示了当前服务实例关于 Nacos 的基础配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+#// 20201023181153
+#// http://localhost:9000/actuator/nacos-discovery
+#
+#{
+#  "subscribe": [
+#    {
+#      "name": "server-order",
+#      "groupName": "DEFAULT_GROUP",
+#      "clusters": "DEFAULT",
+#      "cacheMillis": 1000,
+#      "hosts": [
+#
+#      ],
+#      "lastRefTime": 0,
+#      "checksum": "",
+#      "allIPs": false,
+#      "valid": true
+#    }
+#  ],
+#  "NacosDiscoveryProperties": {
+#    "serverAddr": "127.0.0.1:8848",
+#    "username": "",
+#    "password": "",
+#    "endpoint": "",
+#    "namespace": "",
+#    "watchDelay": 30000,
+#    "logName": "",
+#    "service": "server-order",
+#    "weight": 1.0,
+#    "clusterName": "DEFAULT",
+#    "group": "DEFAULT_GROUP",
+#    "namingLoadCacheAtStart": "false",
+#    "metadata": {
+#      "preserved.register.source": "SPRING_CLOUD"
+#    },
+#    "registerEnabled": true,
+#    "ip": "30.26.223.49",
+#    "networkInterface": "",
+#    "port": 9000,
+#    "secure": false,
+#    "accessKey": "",
+#    "secretKey": "",
+#    "heartBeatInterval": null,
+#    "heartBeatTimeout": null,
+#    "ipDeleteTimeout": null,
+#    "instanceEnabled": true,
+#    "ephemeral": true,
+#    "nacosProperties": {
+#      "secretKey": "",
+#      "namespace": "",
+#      "username": "",
+#      "namingLoadCacheAtStart": "false",
+#      "serverAddr": "127.0.0.1:8848",
+#      "com.alibaba.nacos.naming.log.filename": "",
+#      "clusterName": "DEFAULT",
+#      "password": "",
+#      "accessKey": "",
+#      "endpoint": ""
+#    }
+#  }
+#}
