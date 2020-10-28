@@ -13,9 +13,9 @@ spring:
         server-addr: 127.0.0.1:8848
       config:
         server-addr: 127.0.0.1:8848
-    alibaba:
-      seata:
-        tx-service-group: ${spring.application.name}-group
+#    alibaba:
+#      seata:
+#        tx-service-group: ${spring.application.name}-group
   application:
     name: server-user
   datasource:
@@ -25,24 +25,48 @@ spring:
     password: 123456
     type: com.alibaba.druid.pool.DruidDataSource
 #seata.tx-service-group: ${spring.application.name}-group与nacos中的配置service.vgroupMapping.${spring.application.name}-group的${spring.application.name}是不是一致。
+#seata:
+##  application-id: ${spring.application.name}
+##  tx-service-group: ${spring.application.name}-group
+#  config:
+#    type: nacos
+#    nacos:
+#      #需要和server在同一个注册中心下
+#      serverAddr: 127.0.0.1:8848
+#      #需要server端(registry和config)、nacos配置client端(registry和config)保持一致
+#      group: SEATA_GROUP
+#  registry:
+#    type: nacos
+#    nacos:
+#      #需要和server端保持一致，即server在nacos中的名称，默认为seata-server
+#      application: seata-server
+#      serverAddr: 127.0.0.1:8848
+#      #需要server端(registry和config)、nacos配置client端(registry和config)保持一致
+#      group: SEATA_GROUP
+
+
 seata:
-#  application-id: ${spring.application.name}
-#  tx-service-group: ${spring.application.name}-group
+#  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: my_test_tx_group
   config:
     type: nacos
     nacos:
-      #需要和server在同一个注册中心下
-      serverAddr: 127.0.0.1:8848
-      #需要server端(registry和config)、nacos配置client端(registry和config)保持一致
+      namespace:
+      serverAddr: 30.26.223.49:8848
       group: SEATA_GROUP
+      userName: ""
+      password: ""
   registry:
     type: nacos
     nacos:
-      #需要和server端保持一致，即server在nacos中的名称，默认为seata-server
       application: seata-server
-      serverAddr: 127.0.0.1:8848
-      #需要server端(registry和config)、nacos配置client端(registry和config)保持一致
+      serverAddr: 30.26.223.49:8848
       group: SEATA_GROUP
+      namespace:
+      userName: ""
+      password: ""
+
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
